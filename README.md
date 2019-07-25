@@ -17,8 +17,8 @@ samples, guidance on mobile development, and a full API reference.
 It's a plugin to demonstrat how to edit the contrast and the brightness of a image.
 Only works for android, in future versions will works for IOS.
 
-##Example
+## Example
 See the example file.
 
-##The best way to use
+## The best way to use
 Always try to put compress images, images with a huge size will let the reender effect slow.
