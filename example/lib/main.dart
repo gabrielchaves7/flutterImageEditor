@@ -4,11 +4,17 @@ import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'package:editor_foto/editor_foto.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
-void main() => runApp(Teste());
+void main() async{
+  await PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
+  final directory = await getExternalStorageDirectory();
+  runApp(Teste(imagem: File('${directory.path}/naruto.jpg'),));
+}
 
 class Teste extends StatefulWidget {
-  final Image imagem;
+  final File imagem;
 
   Teste(
       {Key key,
@@ -24,23 +30,18 @@ class _Teste extends State<Teste> {
   StreamController<Uint8List> _fotoWdg;
   double _contraste;
   double _brilho;
-  Image imageTeste;
+  ByteData teste;
+  Uint8List foto;
 
   @override
   void initState() {
     super.initState();
-    initPlatformState();
-    obterImagem();
-  }
-
-  Future<void> initPlatformState() async {
     _fotoWdg = new StreamController<Uint8List>();
     _brilho = 0;
     _contraste = 1;
-  }
-
-  void obterImagem() async{
-    imageTeste = Image.asset('foto/naruto.jpg');
+    Uint8List bytes = widget.imagem.readAsBytesSync() as Uint8List;
+    teste = ByteData.view(bytes.buffer);
+    foto = teste.buffer.asUint8List(teste.offsetInBytes, teste.lengthInBytes);
   }
 
   @override
@@ -50,7 +51,7 @@ class _Teste extends State<Teste> {
           appBar: AppBar(
             title: const Text('Plugin example app'),
           ),
-          body: imagemEditavel(_fotoWdg, imageTeste, _contraste, _brilho, setarBrilho,
+          body: imagemEditavel(_fotoWdg, foto, _contraste, _brilho, setarBrilho,
               setarContraste, enviarFoto)
       ),
     );
@@ -58,8 +59,7 @@ class _Teste extends State<Teste> {
 
 
   void enviarFoto(double contraste, double brilho) async {
-    ByteData image = await rootBundle.load('foto/naruto.jpg');
-    Uint8List foto = image.buffer.asUint8List(image.offsetInBytes, image.lengthInBytes);
+
     var retorno = await EditorFoto.aplicarBrilho(foto, contraste, brilho);
     _fotoWdg.add(retorno);
   }
@@ -77,7 +77,7 @@ class _Teste extends State<Teste> {
   }
 }
 
-Widget imagemEditavel(StreamController imagemController, Image imagem,
+Widget imagemEditavel(StreamController imagemController, Uint8List imagem,
     double contraste, double brilho, Function setarBrilho,
     Function setarContraste, Function enviarFoto){
   return Center(
@@ -95,7 +95,7 @@ Widget imagemEditavel(StreamController imagemController, Image imagem,
                     if(snapshot.connectionState == ConnectionState.active){
                       return Image.memory(snapshot.data, gaplessPlayback: true, fit: BoxFit.contain,);
                     } else{
-                      return Image(image: imagem.image,  gaplessPlayback: true, fit: BoxFit.contain,);
+                      return Image.memory(imagem,  gaplessPlayback: true, fit: BoxFit.contain,);
                     }
                   },
                 ),
