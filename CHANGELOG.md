@@ -6,3 +6,6 @@ for IOS.
 
 ## 0.0.2
 Translating functions for english, method to save the image after edit.
+
+## 0.0.3
+Method to save the image after edit.
