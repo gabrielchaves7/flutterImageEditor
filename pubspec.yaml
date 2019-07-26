@@ -1,8 +1,8 @@
 name: editor_foto
 description: A new flutter plugin project.
-version: 0.0.1
-author:
-homepage:
+version: 0.0.2
+author: GabrielChaves <gabrielbum@gmail.com> ViniciusFiuza <vinicius.fiuza@outlook.com>
+homepage: https://github.com/gabrielchaves7/flutterImageEditor
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

@@ -10,76 +10,73 @@ import 'package:permission_handler/permission_handler.dart';
 void main() async{
   await PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
   final directory = await getExternalStorageDirectory();
-  runApp(Teste(imagem: File('${directory.path}/naruto.jpg'),));
+  runApp(WidgetEditableImage(imagem: File('${directory.path}/naruto.jpg'),));
 }
 
-class Teste extends StatefulWidget {
+class WidgetEditableImage extends StatefulWidget {
   final File imagem;
 
-  Teste(
+  WidgetEditableImage(
       {Key key,
         @required this.imagem,})
       : super(key: key);
 
   @override
-  _Teste createState() => _Teste();
+  _WidgetEditableImage createState() => _WidgetEditableImage();
 }
 
-class _Teste extends State<Teste> {
+class _WidgetEditableImage extends State<WidgetEditableImage> {
 
-  StreamController<Uint8List> _fotoWdg;
-  double _contraste;
-  double _brilho;
-  ByteData teste;
-  Uint8List foto;
+  StreamController<Uint8List> _pictureStream;
+  double _contrast;
+  double _brithness;
+  ByteData pictureByteData;
+  Uint8List picture;
 
   @override
   void initState() {
     super.initState();
-    _fotoWdg = new StreamController<Uint8List>();
-    _brilho = 0;
-    _contraste = 1;
+    _pictureStream = new StreamController<Uint8List>();
+    _brithness = 0;
+    _contrast = 1;
     Uint8List bytes = widget.imagem.readAsBytesSync() as Uint8List;
-    teste = ByteData.view(bytes.buffer);
-    foto = teste.buffer.asUint8List(teste.offsetInBytes, teste.lengthInBytes);
+    pictureByteData = ByteData.view(bytes.buffer);
+    picture = pictureByteData.buffer.asUint8List(pictureByteData.offsetInBytes, pictureByteData.lengthInBytes);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          appBar: AppBar(
-            title: const Text('Plugin example app'),
-          ),
-          body: imagemEditavel(_fotoWdg, foto, _contraste, _brilho, setarBrilho,
-              setarContraste, enviarFoto)
+          body: containerEditableImage(_pictureStream, picture, _contrast, _brithness, setBrithness,
+              setContrast, updatePicutre)
       ),
     );
   }
 
 
-  void enviarFoto(double contraste, double brilho) async {
+  void updatePicutre(double contrast, double brithness) async {
 
-    var retorno = await EditorFoto.aplicarBrilho(foto, contraste, brilho);
-    _fotoWdg.add(retorno);
+    var retorno = await PictureEditor.editImage(picture, contrast, brithness);
+    _pictureStream.add(retorno);
   }
 
-  void setarBrilho(double valor){
+  void setBrithness(double valor){
     setState(() {
-      _brilho = valor;
+      _brithness = valor;
     });
   }
 
-  void setarContraste(double valor){
+  void setContrast(double valor){
     setState(() {
-      _contraste = valor;
+      _contrast = valor;
     });
   }
 }
 
-Widget imagemEditavel(StreamController imagemController, Uint8List imagem,
-    double contraste, double brilho, Function setarBrilho,
-    Function setarContraste, Function enviarFoto){
+Widget containerEditableImage(StreamController picutreStream, Uint8List picture,
+    double contrast, double brithness, Function setBrithness,
+    Function setContrast, Function updatePicutre){
   return Center(
     child: Row(
       children: <Widget>[
@@ -90,12 +87,12 @@ Widget imagemEditavel(StreamController imagemController, Uint8List imagem,
                 height: 300,
                 width: 300,
                 child: StreamBuilder(
-                  stream: imagemController.stream,
+                  stream: picutreStream.stream,
                   builder: (BuildContext context, snapshot) {
                     if(snapshot.connectionState == ConnectionState.active){
                       return Image.memory(snapshot.data, gaplessPlayback: true, fit: BoxFit.contain,);
                     } else{
-                      return Image.memory(imagem,  gaplessPlayback: true, fit: BoxFit.contain,);
+                      return Image.memory(picture,  gaplessPlayback: true, fit: BoxFit.contain,);
                     }
                   },
                 ),
@@ -110,13 +107,10 @@ Widget imagemEditavel(StreamController imagemController, Uint8List imagem,
                       label: 'Contraste',
                       min: 0,
                       max: 10,
-                      value: contraste,
+                      value: contrast,
                       onChanged: (valor) {
-                        setarContraste(valor);
-                        /*setState(() {
-                          this._contraste = valor;
-                        });*/
-                        enviarFoto(contraste, brilho);
+                        setContrast(valor);
+                        updatePicutre(contrast, brithness);
                       },
                     ),
                     Text("Brilho"),
@@ -124,13 +118,10 @@ Widget imagemEditavel(StreamController imagemController, Uint8List imagem,
                       label: 'Brilho',
                       min: -255,
                       max: 255,
-                      value: brilho,
+                      value: brithness,
                       onChanged: (valor) {
-                        setarBrilho(valor);
-                        /*setState(() {
-                          this._brilho = valor;
-                        });*/
-                        enviarFoto(contraste, brilho);
+                        setBrithness(valor);
+                        updatePicutre(contrast, brithness);
                       },
                     )
                   ],
