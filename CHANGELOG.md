@@ -5,4 +5,4 @@ like a method that receive a file and display a widget with the filters to you a
 for IOS.  
 
 ## 0.0.2
-Translating functions for inglesh.
+Translating functions for english, method to save the image after edit.
