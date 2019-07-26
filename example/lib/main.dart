@@ -56,7 +56,6 @@ class _WidgetEditableImage extends State<WidgetEditableImage> {
 
 
   void updatePicutre(double contrast, double brithness) async {
-
     var retorno = await PictureEditor.editImage(picture, contrast, brithness);
     _pictureStream.add(retorno);
   }
@@ -77,6 +76,7 @@ class _WidgetEditableImage extends State<WidgetEditableImage> {
 Widget containerEditableImage(StreamController picutreStream, Uint8List picture,
     double contrast, double brithness, Function setBrithness,
     Function setContrast, Function updatePicutre){
+  var novaFoto = picture;
   return Center(
     child: Row(
       children: <Widget>[
@@ -90,6 +90,7 @@ Widget containerEditableImage(StreamController picutreStream, Uint8List picture,
                   stream: picutreStream.stream,
                   builder: (BuildContext context, snapshot) {
                     if(snapshot.connectionState == ConnectionState.active){
+                      novaFoto = snapshot.data;
                       return Image.memory(snapshot.data, gaplessPlayback: true, fit: BoxFit.contain,);
                     } else{
                       return Image.memory(picture,  gaplessPlayback: true, fit: BoxFit.contain,);
@@ -127,6 +128,14 @@ Widget containerEditableImage(StreamController picutreStream, Uint8List picture,
                   ],
                 )
               ],
+            ),
+            IconButton(
+              color: Colors.black,
+              icon: Icon(Icons.save),
+              onPressed: () async {
+                final directory = await getExternalStorageDirectory();
+                PictureEditor.saveImage(novaFoto, '${directory.path}/naruto.jpg');
+              },
             ),
           ],
         )
