@@ -1,9 +1,8 @@
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:editor_foto/editor_foto.dart';
 
 void main() {
-  const MethodChannel channel = MethodChannel('editor_foto');
+  const MethodChannel channel = MethodChannel('flutter_image_editor');
 
   setUp(() {
     channel.setMockMethodCallHandler((MethodCall methodCall) async {

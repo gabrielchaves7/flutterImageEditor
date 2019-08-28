@@ -9,3 +9,6 @@ Translating functions for english, method to save the image after edit.
 
 ## 0.0.3
 Method to save the image after edit.
+
+## 0.0.4 
+Method to rotate the image

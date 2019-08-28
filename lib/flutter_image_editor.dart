@@ -6,7 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 class PictureEditor {
   static const MethodChannel _channel =
-      const MethodChannel('editor_foto');
+      const MethodChannel('flutter_image_editor');
 
   static Future<List<int>> editImage(Uint8List fotoInput, double contraste, double brilho) async {
     final Uint8List foto = await _channel.invokeMethod('aplicarBrilho', <String, dynamic>{
@@ -14,6 +14,15 @@ class PictureEditor {
       'contraste': contraste,
       'brilho' : brilho
     });
+    return foto;
+  }
+
+  static Future<List<int>> rotateImage(Uint8List fotoInput, double degrees) async {
+    final Uint8List foto = await _channel.invokeMethod('rotacionarImagem', <String, dynamic>{
+      'foto': fotoInput,
+      'degrees': degrees
+    });
+
     return foto;
   }
 

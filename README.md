@@ -1,4 +1,4 @@
-# editor_foto
+# flutter_image_editor
 
 A new flutter plugin project.
 

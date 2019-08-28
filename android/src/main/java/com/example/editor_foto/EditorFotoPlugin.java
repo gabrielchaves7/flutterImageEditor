@@ -12,6 +12,7 @@ import android.graphics.ColorMatrix;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.ColorMatrixColorFilter;
+import android.graphics.Matrix;
 
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
@@ -23,24 +24,36 @@ import java.util.List;
 public class EditorFotoPlugin implements MethodCallHandler {
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "editor_foto");
+    final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_image_editor");
     channel.setMethodCallHandler(new EditorFotoPlugin());
   }
 
   @Override
   public void onMethodCall(MethodCall call, Result result) {
-      if (call.method.equals("aplicarBrilho")) {
-          byte[] foto = call.argument("foto");
-          double contraste = call.argument("contraste");
-          double brilho = call.argument("brilho");
-          Bitmap fotoBmp = BitmapFactory.decodeByteArray(foto, 0, foto.length);
-          result.success(changeBitmapContrastBrightness(fotoBmp, (float)contraste, (float)brilho));
-      } else {
-          result.notImplemented();
-      }
+        if (call.method.equals("aplicarBrilho")) {
+            byte[] foto = call.argument("foto");
+            double contraste = call.argument("contraste");
+            double brilho = call.argument("brilho");
+            Bitmap fotoBmp = BitmapFactory.decodeByteArray(foto, 0, foto.length);
+            result.success(changeBitmapContrastBrightness(fotoBmp, (float)contraste, (float)brilho));
+        } else if(call.method.equals("rotacionarImagem")){
+            double degrees = call.argument("degrees");
+            byte[] foto = call.argument("foto");
+            Bitmap fotoBmp = BitmapFactory.decodeByteArray(foto, 0, foto.length);
+            result.success(rotateBitmap(fotoBmp, (float)degrees));
+        } else {
+            result.notImplemented();
+        }
   }
 
-    public static byte[] changeBitmapContrastBrightness(Bitmap bmp, float contrast, float brightness) {
+    private static byte[] rotateBitmap(Bitmap fotoBmp, float degrees){
+        Matrix matrix = new Matrix();
+        matrix.setRotate(degrees);
+        Bitmap bOutput = Bitmap.createBitmap(fotoBmp, 0, 0, fotoBmp.getWidth(), fotoBmp.getHeight(), matrix, true);
+        return BitmapToByteArray(bOutput); 
+    }
+
+    private static byte[] changeBitmapContrastBrightness(Bitmap bmp, float contrast, float brightness) {
         ColorMatrix cm = new ColorMatrix(new float[]
                 {
                         contrast, 0, 0, 0, brightness,
@@ -57,10 +70,13 @@ public class EditorFotoPlugin implements MethodCallHandler {
         paint.setColorFilter(new ColorMatrixColorFilter(cm));
         canvas.drawBitmap(bmp, 0, 0, paint);
 
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        ret.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
+        return BitmapToByteArray(ret);        
+    }
 
+    private static byte[] BitmapToByteArray(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
+        byte[] byteArray = byteArrayOutputStream.toByteArray();
         return byteArray;
     }
 }

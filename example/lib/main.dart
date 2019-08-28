@@ -56,7 +56,7 @@ class _WidgetEditableImage extends State<WidgetEditableImage> {
 
 
   void updatePicutre(double contrast, double brithness) async {
-    var retorno = await PictureEditor.editImage(picture, contrast, brithness);
+    var retorno = await PictureEditor.rotateImage(picture, 180);
     _pictureStream.add(retorno);
   }
 
