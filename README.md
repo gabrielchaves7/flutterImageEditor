@@ -1,17 +1,5 @@
 # flutter_image_editor
-
-A new flutter plugin project.
-
-## Getting Started
-
-This project is a starting point for a Flutter
-[plug-in package](https://flutter.dev/developing-packages/),
-a specialized package that includes platform-specific implementation code for
-Android and/or iOS.
-
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+A plugin to edit brightness, contrast and rotate the image.
 
 ## What this plugin does
 It's a plugin to demonstrat how to edit the contrast and the brightness of a image.

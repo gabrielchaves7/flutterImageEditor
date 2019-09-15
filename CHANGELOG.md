@@ -11,4 +11,4 @@ Translating functions for english, method to save the image after edit.
 Method to save the image after edit.
 
 ## 0.0.4 
-Method to rotate the image
+Method to rotate the image and some changes in the files names and example.
