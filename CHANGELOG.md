@@ -12,3 +12,6 @@ Method to save the image after edit.
 
 ## 0.0.4 
 Method to rotate the image and some changes in the files names and example.
+
+## 0.0.5
+Improoving the description of the plugin.
