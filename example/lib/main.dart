@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'package:flutter_image_editor/flutter_image_editor.dart';
 import 'package:flutter/services.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 void main() async{
-  await PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
   ByteData bytes = await rootBundle.load('assets/naruto.jpg');
   final buffer = bytes.buffer;
   var image = buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
