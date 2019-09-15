@@ -1,6 +1,6 @@
 name: flutter_image_editor
 description: A plugin for flutter made to edit images. Only 3 features available -> change the brightness, contrast and rotate image. Future versions will have more stuf. Dont work for IOS YET.
-version: 0.0.5
+version: 0.0.6
 author: GabrielChaves <gabrielbum@gmail.com> ViniciusFiuza <vinicius.fiuza@outlook.com>
 homepage: https://github.com/gabrielchaves7/flutterImageEditor
 

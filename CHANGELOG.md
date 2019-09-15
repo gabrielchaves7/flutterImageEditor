@@ -15,3 +15,6 @@ Method to rotate the image and some changes in the files names and example.
 
 ## 0.0.5
 Improoving the description of the plugin.
+
+## 0.0.6
+Removing ununsed dependecies and improoving the example.
