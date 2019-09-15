@@ -1,4 +1,4 @@
-package com.example.editor_foto;
+package com.example.flutter_image_editor;
 
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
@@ -20,12 +20,12 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-/** EditorFotoPlugin */
-public class EditorFotoPlugin implements MethodCallHandler {
+/** FlutterImageEditorPlugin */
+public class FlutterImageEditorPlugin implements MethodCallHandler {
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
     final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_image_editor");
-    channel.setMethodCallHandler(new EditorFotoPlugin());
+    channel.setMethodCallHandler(new FlutterImageEditorPlugin());
   }
 
   @Override

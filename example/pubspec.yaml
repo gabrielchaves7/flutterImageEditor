@@ -1,5 +1,5 @@
-name: editor_foto_example
-description: Demonstrates how to use the editor_foto plugin.
+name: flutter_image_editor_example
+description: Demonstrates how to use the flutter_image_editor plugin.
 publish_to: 'none'
 
 environment:
@@ -17,7 +17,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  editor_foto:
+  flutter_image_editor:
     path: ../
 
 # For information on the generic Dart part of this file, see the
@@ -27,8 +27,7 @@ dev_dependencies:
 flutter:
 
   assets:
-    - foto/naruto.png
-    - foto/naruto.jpg
+    - assets/
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

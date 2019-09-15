@@ -2,9 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/editor_foto.iml" filepath="$PROJECT_DIR$/editor_foto.iml" />
-      <module fileurl="file://$PROJECT_DIR$/android/editor_foto_android.iml" filepath="$PROJECT_DIR$/android/editor_foto_android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/example/android/editor_foto_example_android.iml" filepath="$PROJECT_DIR$/example/android/editor_foto_example_android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/flutterImageEditor.iml" filepath="$PROJECT_DIR$/.idea/flutterImageEditor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/flutter_image_editor.iml" filepath="$PROJECT_DIR$/flutter_image_editor.iml" />
     </modules>
   </component>
 </project>

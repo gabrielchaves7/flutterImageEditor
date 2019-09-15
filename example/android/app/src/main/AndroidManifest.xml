@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.editor_foto_example">
+    package="com.example.flutter_image_editor_example">
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
@@ -9,7 +9,7 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="editor_foto_example"
+        android:label="flutter_image_editor_example"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

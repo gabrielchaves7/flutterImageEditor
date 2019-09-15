@@ -1,11 +1,11 @@
-#import "EditorFotoPlugin.h"
+#import "FlutterImageEditorPlugin.h"
 
-@implementation EditorFotoPlugin
+@implementation FlutterImageEditorPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
   FlutterMethodChannel* channel = [FlutterMethodChannel
-      methodChannelWithName:@"editor_foto"
+      methodChannelWithName:@"flutter_image_editor"
             binaryMessenger:[registrar messenger]];
-  EditorFotoPlugin* instance = [[EditorFotoPlugin alloc] init];
+  FlutterImageEditorPlugin* instance = [[FlutterImageEditorPlugin alloc] init];
   [registrar addMethodCallDelegate:instance channel:channel];
 }
 

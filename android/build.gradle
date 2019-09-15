@@ -1,4 +1,4 @@
-group 'com.example.editor_foto'
+group 'com.example.flutter_image_editor'
 version '1.0-SNAPSHOT'
 
 buildscript {

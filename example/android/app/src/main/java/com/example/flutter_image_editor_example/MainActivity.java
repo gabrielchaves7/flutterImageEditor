@@ -1,4 +1,4 @@
-package com.example.editor_foto_example;
+package com.example.flutter_image_editor_example;
 
 import android.os.Bundle;
 import io.flutter.app.FlutterActivity;

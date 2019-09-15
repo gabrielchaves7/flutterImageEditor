@@ -2,19 +2,21 @@ import 'dart:async';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
-import 'package:editor_foto/editor_foto.dart';
+import 'package:flutter_image_editor/flutter_image_editor.dart';
 import 'package:flutter/services.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 void main() async{
   await PermissionHandler().checkPermissionStatus(PermissionGroup.storage);
-  final directory = await getExternalStorageDirectory();
-  runApp(WidgetEditableImage(imagem: File('${directory.path}/naruto.jpg'),));
+  ByteData bytes = await rootBundle.load('assets/naruto.jpg');
+  final buffer = bytes.buffer;
+  var image = buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+
+  runApp(WidgetEditableImage(imagem: image));
 }
 
 class WidgetEditableImage extends StatefulWidget {
-  final File imagem;
+  final Uint8List imagem;
 
   WidgetEditableImage(
       {Key key,
@@ -39,8 +41,7 @@ class _WidgetEditableImage extends State<WidgetEditableImage> {
     _pictureStream = new StreamController<Uint8List>();
     _brithness = 0;
     _contrast = 1;
-    Uint8List bytes = widget.imagem.readAsBytesSync() as Uint8List;
-    pictureByteData = ByteData.view(bytes.buffer);
+    pictureByteData = ByteData.view(widget.imagem.buffer);
     picture = pictureByteData.buffer.asUint8List(pictureByteData.offsetInBytes, pictureByteData.lengthInBytes);
   }
 
@@ -128,14 +129,6 @@ Widget containerEditableImage(StreamController picutreStream, Uint8List picture,
                   ],
                 )
               ],
-            ),
-            IconButton(
-              color: Colors.black,
-              icon: Icon(Icons.save),
-              onPressed: () async {
-                final directory = await getExternalStorageDirectory();
-                PictureEditor.saveImage(novaFoto, '${directory.path}/naruto.jpg');
-              },
             ),
           ],
         )

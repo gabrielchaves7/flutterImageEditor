@@ -1,6 +1,6 @@
-# editor_foto_example
+# flutter_image_editor_example
 
-Demonstrates how to use the editor_foto plugin.
+Demonstrates how to use the flutter_image_editor plugin.
 
 ## Getting Started
 
