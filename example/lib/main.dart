@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:typed_data';
 import 'package:flutter_image_editor/flutter_image_editor.dart';
@@ -75,7 +74,6 @@ class _WidgetEditableImage extends State<WidgetEditableImage> {
 Widget containerEditableImage(StreamController picutreStream, Uint8List picture,
     double contrast, double brithness, Function setBrithness,
     Function setContrast, Function updatePicutre){
-  var novaFoto = picture;
   return Center(
     child: Row(
       children: <Widget>[
@@ -89,7 +87,6 @@ Widget containerEditableImage(StreamController picutreStream, Uint8List picture,
                   stream: picutreStream.stream,
                   builder: (BuildContext context, snapshot) {
                     if(snapshot.connectionState == ConnectionState.active){
-                      novaFoto = snapshot.data;
                       return Image.memory(snapshot.data, gaplessPlayback: true, fit: BoxFit.contain,);
                     } else{
                       return Image.memory(picture,  gaplessPlayback: true, fit: BoxFit.contain,);
