@@ -17,13 +17,15 @@ void main() {
     final buffer = bytes.buffer;
     var image = buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
     // Build our app and trigger a frame.
-    await tester.pumpWidget(WidgetEditableImage(imagem: image,));
+    await tester.pumpWidget(WidgetEditableImage(
+      imagem: image,
+    ));
 
     // Verify that platform version is retrieved.
     expect(
       find.byWidgetPredicate(
-        (Widget widget) => widget is Text &&
-                           widget.data.startsWith('Running on:'),
+        (Widget widget) =>
+            widget is Text && widget.data.startsWith('Running on:'),
       ),
       findsOneWidget,
     );

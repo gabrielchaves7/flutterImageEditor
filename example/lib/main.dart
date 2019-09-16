@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter_image_editor/flutter_image_editor.dart';
 import 'package:flutter/services.dart';
 
-void main() async{
+void main() async {
   ByteData bytes = await rootBundle.load('assets/naruto.jpg');
   final buffer = bytes.buffer;
   var image = buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
@@ -15,17 +15,16 @@ void main() async{
 class WidgetEditableImage extends StatefulWidget {
   final Uint8List imagem;
 
-  WidgetEditableImage(
-      {Key key,
-        @required this.imagem,})
-      : super(key: key);
+  WidgetEditableImage({
+    Key key,
+    @required this.imagem,
+  }) : super(key: key);
 
   @override
   _WidgetEditableImage createState() => _WidgetEditableImage();
 }
 
 class _WidgetEditableImage extends State<WidgetEditableImage> {
-
   StreamController<Uint8List> _pictureStream;
   double _contrast;
   double _brithness;
@@ -39,41 +38,45 @@ class _WidgetEditableImage extends State<WidgetEditableImage> {
     _brithness = 0;
     _contrast = 1;
     pictureByteData = ByteData.view(widget.imagem.buffer);
-    picture = pictureByteData.buffer.asUint8List(pictureByteData.offsetInBytes, pictureByteData.lengthInBytes);
+    picture = pictureByteData.buffer.asUint8List(
+        pictureByteData.offsetInBytes, pictureByteData.lengthInBytes);
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-          body: containerEditableImage(_pictureStream, picture, _contrast, _brithness, setBrithness,
-              setContrast, updatePicutre)
-      ),
+          body: containerEditableImage(_pictureStream, picture, _contrast,
+              _brithness, setBrithness, setContrast, updatePicutre)),
     );
   }
-
 
   void updatePicutre(double contrast, double brithness) async {
     var retorno = await PictureEditor.editImage(picture, contrast, brithness);
     _pictureStream.add(retorno);
   }
 
-  void setBrithness(double valor){
+  void setBrithness(double valor) {
     setState(() {
       _brithness = valor;
     });
   }
 
-  void setContrast(double valor){
+  void setContrast(double valor) {
     setState(() {
       _contrast = valor;
     });
   }
 }
 
-Widget containerEditableImage(StreamController picutreStream, Uint8List picture,
-    double contrast, double brithness, Function setBrithness,
-    Function setContrast, Function updatePicutre){
+Widget containerEditableImage(
+    StreamController picutreStream,
+    Uint8List picture,
+    double contrast,
+    double brithness,
+    Function setBrithness,
+    Function setContrast,
+    Function updatePicutre) {
   return Center(
     child: Row(
       children: <Widget>[
@@ -86,15 +89,23 @@ Widget containerEditableImage(StreamController picutreStream, Uint8List picture,
                 child: StreamBuilder(
                   stream: picutreStream.stream,
                   builder: (BuildContext context, snapshot) {
-                    if(snapshot.connectionState == ConnectionState.active){
-                      return Image.memory(snapshot.data, gaplessPlayback: true, fit: BoxFit.contain,);
-                    } else{
-                      return Image.memory(picture,  gaplessPlayback: true, fit: BoxFit.contain,);
+                    if (snapshot.connectionState == ConnectionState.active) {
+                      return Image.memory(
+                        snapshot.data,
+                        gaplessPlayback: true,
+                        fit: BoxFit.contain,
+                      );
+                    } else {
+                      return Image.memory(
+                        picture,
+                        gaplessPlayback: true,
+                        fit: BoxFit.contain,
+                      );
                     }
                   },
                 ),
-                padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0)
-            ),
+                padding:
+                    EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0)),
             Row(
               children: <Widget>[
                 Column(
