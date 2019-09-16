@@ -18,3 +18,6 @@ Improoving the description of the plugin.
 
 ## 0.0.6
 Removing ununsed dependecies and improoving the example.
+
+## 0.0.7
+Correcting errors.
