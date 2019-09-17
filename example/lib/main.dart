@@ -27,7 +27,7 @@ class WidgetEditableImage extends StatefulWidget {
 class _WidgetEditableImage extends State<WidgetEditableImage> {
   StreamController<Uint8List> _pictureStream;
   double _contrast;
-  double _brithness;
+  double _brightness;
   ByteData pictureByteData;
   Uint8List picture;
 
@@ -35,7 +35,7 @@ class _WidgetEditableImage extends State<WidgetEditableImage> {
   void initState() {
     super.initState();
     _pictureStream = new StreamController<Uint8List>();
-    _brithness = 0;
+    _brightness = 0;
     _contrast = 1;
     pictureByteData = ByteData.view(widget.imagem.buffer);
     picture = pictureByteData.buffer.asUint8List(
@@ -47,18 +47,18 @@ class _WidgetEditableImage extends State<WidgetEditableImage> {
     return MaterialApp(
       home: Scaffold(
           body: containerEditableImage(_pictureStream, picture, _contrast,
-              _brithness, setBrithness, setContrast, updatePicutre)),
+              _brightness, setBrightness, setContrast, updatePicutre)),
     );
   }
 
-  void updatePicutre(double contrast, double brithness) async {
-    var retorno = await PictureEditor.editImage(picture, contrast, brithness);
+  void updatePicutre(double contrast, double brightness) async {
+    var retorno = await PictureEditor.editImage(picture, contrast, brightness);
     _pictureStream.add(retorno);
   }
 
-  void setBrithness(double valor) {
+  void setBrightness(double valor) {
     setState(() {
-      _brithness = valor;
+      _brightness = valor;
     });
   }
 
@@ -73,8 +73,8 @@ Widget containerEditableImage(
     StreamController picutreStream,
     Uint8List picture,
     double contrast,
-    double brithness,
-    Function setBrithness,
+    double brightness,
+    Function setBrightness,
     Function setContrast,
     Function updatePicutre) {
   return Center(
@@ -118,7 +118,7 @@ Widget containerEditableImage(
                       value: contrast,
                       onChanged: (valor) {
                         setContrast(valor);
-                        updatePicutre(contrast, brithness);
+                        updatePicutre(contrast, brightness);
                       },
                     ),
                     Text("Brilho"),
@@ -126,10 +126,10 @@ Widget containerEditableImage(
                       label: 'Brilho',
                       min: -255,
                       max: 255,
-                      value: brithness,
+                      value: brightness,
                       onChanged: (valor) {
-                        setBrithness(valor);
-                        updatePicutre(contrast, brithness);
+                        setBrightness(valor);
+                        updatePicutre(contrast, brightness);
                       },
                     )
                   ],
