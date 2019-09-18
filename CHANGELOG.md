@@ -25,4 +25,5 @@ Correcting errors.
 ## 0.0.8
 Release change brightness and contrast for IOS, rotate image dont work for ios yet.
 
-
+## 0.0.9
+Correcting description.
