@@ -21,3 +21,8 @@ Removing ununsed dependecies and improoving the example.
 
 ## 0.0.7
 Correcting errors.
+
+## 0.0.8
+Release change brightness and contrast for IOS, rotate image dont work for ios yet.
+
+
