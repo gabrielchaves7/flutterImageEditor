@@ -10,20 +10,15 @@ public class SwiftFlutterImageEditorPlugin: NSObject, FlutterPlugin {
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
     if(call.method == "aplicarBrilho"){
+        let argsMap = call.arguments as! NSDictionary
+        let foto:FlutterStandardTypedData = argsMap.value(forKey: "foto") as! FlutterStandardTypedData
+        let brilho:Double = argsMap.value(forKey: "brilho") as! Double
+        let contraste:Double = argsMap.value(forKey: "contraste") as! Double
+        
+        let image = UIImage(data: foto.data)!
 
-      guard let args = call.arguments else {
-        return
-      }
-      if let myArgs = args as? [String: Any],
-         let foto = myArgs["foto"] as? Float,
-         let brilho = myArgs["brilho"] as? Float ,
-         let contraste = myArgs["contraste"] as? Float {
-          let data = NSData.FromArray (foto)
-          let uiimage = UIImage.LoadFromData (data)
-          result.success(changeBitmapContrastBrightness(result, uiimage, brilho, contraste))
-      } else {
-        result("iOS could not extract flutter arguments in method: (aplicarBrilho)")
-      }       
+        result(self.changeBitmapContrastBrightness(imagem: image, brightness: brilho, contrast: contraste))
+
     } else if(call.method == "rotacionarImagem"){
       result("erro")
     } else {
@@ -31,7 +26,7 @@ public class SwiftFlutterImageEditorPlugin: NSObject, FlutterPlugin {
     }    
   }
 
-  private func changeBitmapContrastBrightness(result: FlutterResult, imagem: UIImage, brightness: Float, contrast: Float) {
+  private func changeBitmapContrastBrightness(imagem: UIImage, brightness: Double, contrast: Double) -> UIImage{
     let inputImage = CIImage(image: imagem)!
     let parameters = [
         "inputBrightness": NSNumber(value: brightness),
@@ -41,6 +36,7 @@ public class SwiftFlutterImageEditorPlugin: NSObject, FlutterPlugin {
 
     let context = CIContext(options: nil)
     let img = context.createCGImage(outputImage, from: outputImage.extent)!
-    result(UIImage(cgImage: img).jpegData(compressionQuality: 1.0)) 
+    print("deu erro ao editar a imagem")
+    return UIImage(cgImage: img)
   }
 }
