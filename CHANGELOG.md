@@ -5,25 +5,10 @@ like a method that receive a file and display a widget with the filters to you a
 for IOS.  
 
 ## 0.0.2
-Translating functions for english, method to save the image after edit.
-
-## 0.0.3
-Method to save the image after edit.
-
-## 0.0.4 
 Method to rotate the image and some changes in the files names and example.
 
-## 0.0.5
-Improoving the description of the plugin.
-
-## 0.0.6
-Removing ununsed dependecies and improoving the example.
-
-## 0.0.7
+## 0.0.3
 Correcting errors.
 
-## 0.0.8
-Release change brightness and contrast for IOS, rotate image dont work for ios yet.
-
-## 0.0.9
-Correcting description.
+## 0.0.4
+Release change brightness, contrast and rotate image for IOS.
