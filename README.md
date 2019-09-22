@@ -3,7 +3,7 @@ A plugin to edit brightness, contrast and rotate the image.
 
 ## What this plugin does
 It's a plugin to demonstrat how to edit the contrast and the brightness of a image.
-Only works for android, in future versions will works for IOS.
+Work for android and IOS
 
 ## Example
 See the example file.
