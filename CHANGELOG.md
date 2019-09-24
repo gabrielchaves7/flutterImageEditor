@@ -12,3 +12,6 @@ Correcting errors.
 
 ## 0.0.4
 Release change brightness, contrast and rotate image for IOS.
+
+##1.0.1
+Correcting pod error for IOS builds.
