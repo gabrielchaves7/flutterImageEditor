@@ -99,7 +99,7 @@ Widget rotateImage(Uint8List picture, StreamController picutreStream) {
       RaisedButton(
         onPressed: () async {
           var retorno = await PictureEditor.rotateImage(picture, 90);
-           picutreStream.add(retorno);
+          picutreStream.add(retorno);
         },
       )
     ],
@@ -119,7 +119,8 @@ Widget containerEditableImage(
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Text("If you want to change the brightness and contrast of the image, use this on the body of sccafold"),
+        Text(
+            "If you want to change the brightness and contrast of the image, use this on the body of sccafold"),
         Container(
             height: 300,
             width: 300,
@@ -141,8 +142,7 @@ Widget containerEditableImage(
                 }
               },
             ),
-            padding:
-            EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0)),
+            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0)),
         Row(
           children: <Widget>[
             Column(
