@@ -16,7 +16,7 @@ public class SwiftFlutterImageEditorPlugin: NSObject, FlutterPlugin {
         let contraste:Double = argsMap.value(forKey: "contraste") as! Double        
         let image = UIImage(data: foto.data)!
 
-        result(self.changeUimageContrastBrightness(imagem: image, brightness: brilho, contrast: contraste))
+        result(self.changeUimageContrastBrightness(imagem: image, brightness: (brilho/255), contrast: contraste))
 
     } else if(call.method == "rotacionarImagem"){
         let argsMap = call.arguments as! NSDictionary

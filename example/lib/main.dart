@@ -70,38 +70,42 @@ class _WidgetEditableImage extends State<WidgetEditableImage> {
 }
 
 Widget rotateImage(Uint8List picture, StreamController picutreStream) {
-  return Column(
-    children: <Widget>[
-      Text("If you want to rotate the image, use this on sccafold body"),
-      Container(
-          height: 300,
-          width: 300,
-          child: StreamBuilder(
-            stream: picutreStream.stream,
-            builder: (BuildContext context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.active) {
-                return Image.memory(
-                  snapshot.data,
-                  gaplessPlayback: true,
-                  fit: BoxFit.contain,
-                );
-              } else {
-                return Image.memory(
-                  picture,
-                  gaplessPlayback: true,
-                  fit: BoxFit.contain,
-                );
-              }
-            },
-          ),
-          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0)),
-      RaisedButton(
-        onPressed: () async {
-          var retorno = await PictureEditor.rotateImage(picture, 90);
-           picutreStream.add(retorno);
-        },
-      )
-    ],
+  return Container(
+    padding: EdgeInsets.only(top: 50),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Text("If you want to rotate the image, use this on sccafold body"),
+        Container(
+            height: 300,
+            width: 300,
+            child: StreamBuilder(
+              stream: picutreStream.stream,
+              builder: (BuildContext context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.active) {
+                  return Image.memory(
+                    snapshot.data,
+                    gaplessPlayback: true,
+                    fit: BoxFit.contain,
+                  );
+                } else {
+                  return Image.memory(
+                    picture,
+                    gaplessPlayback: true,
+                    fit: BoxFit.contain,
+                  );
+                }
+              },
+            ),
+            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 16.0)),
+        RaisedButton(
+          onPressed: () async {
+            var retorno = await PictureEditor.rotateImage(picture, 90);
+             picutreStream.add(retorno);
+          },
+        )
+      ],
+    ),
   );
 }
 
