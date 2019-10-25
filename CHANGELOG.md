@@ -18,3 +18,6 @@ Correcting pod error for IOS builds.
 
 #1.1.1
 Adjusting the brightness for IOS.
+
+#1.1.2
+Changing the description.
