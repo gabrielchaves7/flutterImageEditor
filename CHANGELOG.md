@@ -21,3 +21,6 @@ Adjusting the brightness for IOS.
 
 #1.1.2
 Changing the description.
+
+#1.2.0
+Rotate image for IOS.
