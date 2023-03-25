@@ -1,11 +1,11 @@
 name: flutter_image_editor
 description: A plugin for flutter made to edit images. Change the brightness, contrast and rotate image.
-version: 1.2.0
-author: GabrielChaves <gabrielbum@gmail.com> ViniciusFiuza <vinicius.fiuza@outlook.com>
+version: 2.0.0
 homepage: https://github.com/gabrielchaves7/flutterImageEditor
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
+  flutter: ">=1.10.0"
 
 dependencies:
   flutter:
@@ -26,8 +26,12 @@ flutter:
   # adding or updating assets for this project.
 
   plugin:
-    androidPackage: com.example.flutter_image_editor
-    pluginClass: FlutterImageEditorPlugin
+    platforms:
+      ios:
+        pluginClass: FlutterImageEditorPlugin
+      android:
+        package: com.example.flutter_image_editor
+        pluginClass: FlutterImageEditorPlugin
 
 
   # To add assets to your plugin package, add an assets section, like this:

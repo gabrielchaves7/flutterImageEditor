@@ -1,11 +1,16 @@
 package com.example.flutter_image_editor;
 
+import io.flutter.embedding.engine.plugins.FlutterPlugin;
+import io.flutter.plugin.common.BinaryMessenger;
+import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.ColorMatrix;
@@ -14,6 +19,8 @@ import android.graphics.Paint;
 import android.graphics.ColorMatrixColorFilter;
 import android.graphics.Matrix;
 
+import androidx.annotation.NonNull;
+
 import java.io.ByteArrayOutputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -21,10 +28,24 @@ import java.nio.ByteBuffer;
 import java.util.List;
 
 /** FlutterImageEditorPlugin */
-public class FlutterImageEditorPlugin implements MethodCallHandler {
+public class FlutterImageEditorPlugin implements MethodCallHandler, FlutterPlugin {
+
+    private MethodChannel channel;
+    private static final String channelName = "flutter_image_editor";
+
+    private static void setup(FlutterImageEditorPlugin plugin, BinaryMessenger binaryMessenger) {
+        plugin.channel = new MethodChannel(binaryMessenger, channelName);
+        plugin.channel.setMethodCallHandler(plugin);
+    }
+
+    @Override
+    public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
+        setup(this, flutterPluginBinding.getBinaryMessenger());
+    }
+
   /** Plugin registration. */
   public static void registerWith(Registrar registrar) {
-    final MethodChannel channel = new MethodChannel(registrar.messenger(), "flutter_image_editor");
+    final MethodChannel channel = new MethodChannel(registrar.messenger(), channelName);
     channel.setMethodCallHandler(new FlutterImageEditorPlugin());
   }
 
@@ -78,5 +99,10 @@ public class FlutterImageEditorPlugin implements MethodCallHandler {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 80, byteArrayOutputStream);
         byte[] byteArray = byteArrayOutputStream.toByteArray();
         return byteArray;
+    }
+
+    @Override
+    public void onDetachedFromEngine(@NonNull FlutterPluginBinding binding) {
+        channel.setMethodCallHandler(null);
     }
 }

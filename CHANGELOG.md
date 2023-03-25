@@ -24,3 +24,6 @@ Changing the description.
 
 #1.2.0
 Rotate image for IOS.
+
+#2.0.0
+Upgrade flutter sdk

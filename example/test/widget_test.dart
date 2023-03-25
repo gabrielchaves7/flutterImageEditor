@@ -7,19 +7,20 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_test/flutter_test.dart';
-
 import 'package:flutter_image_editor_example/main.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   testWidgets('Verify Platform version', (WidgetTester tester) async {
-    ByteData bytes = await rootBundle.load('assets/naruto.jpg');
+    final bytes = await rootBundle.load('assets/naruto.jpg');
     final buffer = bytes.buffer;
-    var image = buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
+    final image = buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes);
     // Build our app and trigger a frame.
-    await tester.pumpWidget(WidgetEditableImage(
-      imagem: image,
-    ));
+    await tester.pumpWidget(
+      WidgetEditableImage(
+        imagem: image,
+      ),
+    );
 
     // Verify that platform version is retrieved.
     expect(
