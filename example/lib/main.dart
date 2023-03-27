@@ -1,4 +1,4 @@
-// ignore_for_file: public_member_api_docs, depend_on_referenced_packages
+// ignore_for_file: depend_on_referenced_packages
 
 import 'dart:async';
 
@@ -15,23 +15,28 @@ void main() async {
   runApp(WidgetEditableImage(imagem: image));
 }
 
+/// This widget is an example of how to use the plugin.
 class WidgetEditableImage extends StatefulWidget {
+  ///
   const WidgetEditableImage({
     @required this.imagem,
     Key key,
   }) : super(key: key);
+
+  /// Image as a byte array to be edited
   final Uint8List imagem;
 
   @override
   WidgetEditableImageState createState() => WidgetEditableImageState();
 }
 
+///
 class WidgetEditableImageState extends State<WidgetEditableImage> {
   StreamController<Uint8List> _pictureStream;
   double _contrast;
   double _brightness;
-  ByteData pictureByteData;
-  Uint8List picture;
+  ByteData _pictureByteData;
+  Uint8List _picture;
 
   @override
   void initState() {
@@ -39,10 +44,10 @@ class WidgetEditableImageState extends State<WidgetEditableImage> {
     _pictureStream = StreamController<Uint8List>();
     _brightness = 0;
     _contrast = 1;
-    pictureByteData = ByteData.view(widget.imagem.buffer);
-    picture = pictureByteData.buffer.asUint8List(
-      pictureByteData.offsetInBytes,
-      pictureByteData.lengthInBytes,
+    _pictureByteData = ByteData.view(widget.imagem.buffer);
+    _picture = _pictureByteData.buffer.asUint8List(
+      _pictureByteData.offsetInBytes,
+      _pictureByteData.lengthInBytes,
     );
   }
 
@@ -50,80 +55,81 @@ class WidgetEditableImageState extends State<WidgetEditableImage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        body: containerEditableImage(
+        body: _containerEditableImage(
           _pictureStream,
-          picture,
+          _picture,
           _contrast,
           _brightness,
-          setBrightness,
-          setContrast,
-          updatePicutre,
+          _setBrightness,
+          _setContrast,
+          _updatePicutre,
         ),
       ),
     );
   }
 
-  Future<void> updatePicutre(double contrast, double brightness) async {
+  Future<void> _updatePicutre(double contrast, double brightness) async {
     final retorno =
-        await PictureEditor.editImage(picture, contrast, brightness);
+        await PictureEditor.editImage(_picture, contrast, brightness);
     _pictureStream.add(retorno as Uint8List);
   }
 
-  void setBrightness(double valor) {
+  void _setBrightness(double valor) {
     setState(() {
       _brightness = valor;
     });
   }
 
-  void setContrast(double valor) {
+  void _setContrast(double valor) {
     setState(() {
       _contrast = valor;
     });
   }
 }
 
-Widget rotateImage(
-  Uint8List picture,
-  StreamController<Uint8List> picutreStream,
-) {
-  return Column(
-    children: <Widget>[
-      const Text('If you want to rotate the image, use this on sccafold body'),
-      Container(
-        height: 300,
-        width: 300,
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
-        child: StreamBuilder<Uint8List>(
-          stream: picutreStream.stream,
-          builder: (BuildContext context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.active) {
-              return Image.memory(
-                snapshot.data,
-                gaplessPlayback: true,
-                fit: BoxFit.contain,
-              );
-            } else {
-              return Image.memory(
-                picture,
-                gaplessPlayback: true,
-                fit: BoxFit.contain,
-              );
-            }
-          },
-        ),
-      ),
-      OutlinedButton(
-        onPressed: () async {
-          final retorno = await PictureEditor.rotateImage(picture, 90);
-          picutreStream.add(retorno as Uint8List);
-        },
-        child: const Text('Button'),
-      )
-    ],
-  );
-}
+// Widget _rotateImage(
+//   Uint8List picture,
+//   StreamController<Uint8List> picutreStream,
+// ) {
+//   return Column(
+//     children: <Widget>[
+//       const Text('If you want to rotate the
+// image, use this on sccafold body'),
+//       Container(
+//         height: 300,
+//         width: 300,
+//         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+//         child: StreamBuilder<Uint8List>(
+//           stream: picutreStream.stream,
+//           builder: (BuildContext context, snapshot) {
+//             if (snapshot.connectionState == ConnectionState.active) {
+//               return Image.memory(
+//                 snapshot.data,
+//                 gaplessPlayback: true,
+//                 fit: BoxFit.contain,
+//               );
+//             } else {
+//               return Image.memory(
+//                 picture,
+//                 gaplessPlayback: true,
+//                 fit: BoxFit.contain,
+//               );
+//             }
+//           },
+//         ),
+//       ),
+//       OutlinedButton(
+//         onPressed: () async {
+//           final retorno = await PictureEditor.rotateImage(picture, 90);
+//           picutreStream.add(retorno as Uint8List);
+//         },
+//         child: const Text('Button'),
+//       )
+//     ],
+//   );
+// }
 
-Widget containerEditableImage(
+Widget _containerEditableImage(
   StreamController<Uint8List> picutreStream,
   Uint8List picture,
   double contrast,

@@ -27,3 +27,6 @@ Rotate image for IOS.
 
 #2.0.0
 Upgrade flutter sdk
+
+#2.1.0
+Upgrade to null safety
